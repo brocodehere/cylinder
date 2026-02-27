@@ -2,16 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 
-const RotatingContainer = styled(motion.div)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform-origin: center;
-  pointer-events: none;
-`;
-
 const GasContainer = styled.div`
   position: absolute;
   top: 0;
@@ -20,24 +10,6 @@ const GasContainer = styled.div`
   height: 100%;
   pointer-events: none;
   z-index: 1000;
-`;
-
-const ArrowSign = styled.div`
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.6);
-  font-weight: bold;
-  pointer-events: none;
-  
-  &::after {
-    content: '→';
-    transform: rotate(0deg);
-  }
 `;
 
 const MessageBubble = styled(motion.div)`
@@ -219,10 +191,8 @@ const GasEffects = ({ jarId, subheadings, isActive, isMobile, prefersReducedMoti
   const containerRef = useRef(null);
   
   // Generate positions for parallel horizontal lines with arrows
-  const generateCircularPositions = (count, containerRect) => {
+  const generateCircularPositions = (count) => {
     const positions = [];
-    const containerWidth = containerRect.width || 800; // Approximate container width
-    const containerHeight = containerRect.height || 400; // Approximate container height
     
     // Jar position
     const jarX = 0; // Jar position (no mobile margin needed)
@@ -233,7 +203,6 @@ const GasEffects = ({ jarId, subheadings, isActive, isMobile, prefersReducedMoti
     const itemsPerLine = Math.ceil(count / lineHeight); // Items per line
     const horizontalSpacing = 140; // Spacing between items
     const verticalSpacing = 470; // Spacing between lines
-    const startOffsetX = 100; // Start offset from left
     
     // Calculate positions for parallel horizontal lines with arrows
     let totalItems = 0;
@@ -369,9 +338,7 @@ const GasEffects = ({ jarId, subheadings, isActive, isMobile, prefersReducedMoti
       return;
     }
 
-    // Get actual container dimensions
-    const containerRect = containerRef.current ? containerRef.current.getBoundingClientRect() : { width: 800, height: 400 };
-    const positions = generateCircularPositions(subheadingsArray.length, containerRect);
+    const positions = generateCircularPositions(subheadingsArray.length);
     
     // Fill subheading texts into positions using actualIndex
     const newParticles = positions.map((position, index) => {
@@ -396,7 +363,7 @@ const GasEffects = ({ jarId, subheadings, isActive, isMobile, prefersReducedMoti
     });
 
     setParticles(newParticles);
-  }, [jarId, JSON.stringify(subheadings)]); // Removed mobile dependencies since effects are disabled on mobile
+  }, [jarId, subheadings]); // Fixed dependency array
 
   // Framer Motion variants for gas-like emergence and movement
   const bubbleVariants = {

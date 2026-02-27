@@ -25,20 +25,6 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-const LoadingSpinner = styled(motion.div)`
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  border-top: 4px solid #ffffff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
-
 const LoadingText = styled(motion.p)`
   color: #ffffff;
   font-size: 1.2rem;
@@ -190,41 +176,6 @@ const ColumnsContainer = styled.div`
   }
 `;
 
-const NavigationArrow = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(102, 126, 234, 0.8);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 100;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: rgba(102, 126, 234, 1);
-    transform: translateY(-50%) scale(1.1);
-  }
-  
-  &:focus {
-    outline: 2px solid #667eea;
-    outline-offset: 2px;
-  }
-  
-  @media (max-width: 768px) {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-  }
-`;
-
 const PolymerColumn = styled(motion.div)`
   width: 100px;
   height: 320px;
@@ -314,128 +265,6 @@ const ColumnContent = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 3;
-`;
-
-const TitlesContainer = styled.div.withConfig({ shouldForwardProp })`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: ${props => props.titleCount === 1 ? 'center' : 'space-between'};
-  pointer-events: none;
-  z-index: 2;
-`;
-
-const JarTitle = styled.div.withConfig({ shouldForwardProp })`
-  font-weight: ${props => props.isMain ? '800' : '600'};
-  font-size: ${props => {
-    // Dynamic font size based on title length - smaller for compact display
-    const titleLength = props.children?.toString().length || 0;
-    if (titleLength > 15) {
-      return props.isMain ? '0.5rem' : '0.4rem';
-    } else if (titleLength > 10) {
-      return props.isMain ? '0.55rem' : '0.45rem';
-    } else {
-      return props.isMain ? '0.7rem' : '0.6rem';
-    }
-  }};
-  color: ${props => {
-    switch(props.type) {
-      case 'main': return '#ffffff';
-      case 'subtitle': return '#f0f0f0'; // Light white
-      case 'description': return '#e0e0e0';
-      default: return '#ffffff';
-    }
-  }};
-  text-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.8),
-    0 0 8px rgba(0, 0, 0, 0.5),
-    0 0 12px rgba(102, 126, 234, 0.3);
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 6px;
-  padding: 1px 4px;
-  margin: 1px;
-  line-height: 1.1;
-  letter-spacing: 0.2px;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 0 20px rgba(102, 126, 234, 0.3);
-  transition: all 0.3s ease;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  max-width: 85%;
-  box-sizing: border-box;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 6px 20px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      0 0 25px rgba(102, 126, 234, 0.4);
-    text-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.9),
-      0 0 12px rgba(102, 126, 234, 0.6),
-      0 0 20px rgba(255, 215, 0, 0.3);
-    
-    /* Change colors on hover */
-    color: ${props => {
-      switch(props.type) {
-        case 'main': return '#667eea';
-        case 'subtitle': return '#ff6b6b';
-        case 'description': return '#4ecdc4';
-        default: return '#667eea';
-      }
-    }};
-  }
-  
-  @media (max-width: 768px) {
-    font-size: ${props => {
-      const titleLength = props.children?.toString().length || 0;
-      if (titleLength > 15) {
-        return props.isMain ? '0.6rem' : '0.5rem';
-      } else if (titleLength > 10) {
-        return props.isMain ? '0.7rem' : '0.6rem';
-      } else {
-        return props.isMain ? '0.8rem' : '0.7rem';
-      }
-    }};
-    padding: 2px 6px;
-    margin: 1px;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: ${props => {
-      const titleLength = props.children?.toString().length || 0;
-      if (titleLength > 15) {
-        return props.isMain ? '0.5rem' : '0.4rem';
-      } else if (titleLength > 10) {
-        return props.isMain ? '0.6rem' : '0.5rem';
-      } else {
-        return props.isMain ? '0.7rem' : '0.6rem';
-      }
-    }};
-    padding: 1px 4px;
-  }
-`;
-
-const ColumnTitle = styled.div`
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
-  
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
 `;
 
 const API_BASE_URL = 'https://polymersolutions.onrender.com';
@@ -528,7 +357,19 @@ function HeroSectionContent() {
     const sortedTitles = titles.sort((a, b) => a.display_order - b.display_order);
     
     return (
-      <TitlesContainer titleCount={sortedTitles.length}>
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: sortedTitles.length === 1 ? 'center' : 'space-between',
+        pointerEvents: 'none',
+        zIndex: 2
+      }}>
         {sortedTitles.map((title, index) => {
           let position = {};
           
@@ -563,17 +404,51 @@ function HeroSectionContent() {
           }
           
           return (
-            <JarTitle 
+            <div 
               key={title.id} 
-              type={title.title_type}
-              isMain={title.title_type === 'main'}
-              style={position}
+              style={{
+                fontWeight: title.title_type === 'main' ? '800' : '600',
+                fontSize: (() => {
+                  const titleLength = title.title?.toString().length || 0;
+                  if (titleLength > 15) {
+                    return title.title_type === 'main' ? '0.5rem' : '0.4rem';
+                  } else if (titleLength > 10) {
+                    return title.title_type === 'main' ? '0.55rem' : '0.45rem';
+                  } else {
+                    return title.title_type === 'main' ? '0.7rem' : '0.6rem';
+                  }
+                })(),
+                color: (() => {
+                  switch(title.title_type) {
+                    case 'main': return '#ffffff';
+                    case 'subtitle': return '#f0f0f0';
+                    case 'description': return '#e0e0e0';
+                    default: return '#ffffff';
+                  }
+                })(),
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.5), 0 0 12px rgba(102, 126, 234, 0.3)',
+                background: 'rgba(0, 0, 0, 0.7)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255, 255, 255, 0.4)',
+                borderRadius: '6px',
+                padding: '1px 4px',
+                margin: '1px',
+                lineHeight: 1.1,
+                letterSpacing: '0.2px',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(102, 126, 234, 0.3)',
+                transition: 'all 0.3s ease',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                maxWidth: '85%',
+                boxSizing: 'border-box',
+                ...position
+              }}
             >
               {title.title}
-            </JarTitle>
+            </div>
           );
         })}
-      </TitlesContainer>
+      </div>
     );
   };
   useEffect(() => {
