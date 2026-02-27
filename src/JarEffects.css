@@ -1,0 +1,73 @@
+/* Jar Effects - Pure CSS Animations */
+/* Performance optimized with GPU acceleration */
+
+/* Jar Vibration Animation */
+.jar-vibrating {
+  animation: jarVibration 0.3s ease-in-out infinite !important;
+  /* Attractive glass-like border */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  /* Force remove all shadows while vibrating - multiple overrides */
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  /* Override any inherited shadows with maximum specificity */
+  box-shadow: none !important;
+  box-shadow: none !important;
+  /* Force animation to override any conflicting styles */
+  transform: translate(0px, 0px) scale(1) !important;
+  /* Fix layout issues - contain transforms within element bounds */
+  transform-origin: center center !important;
+  /* Prevent layout shifts during animation */
+  will-change: transform !important;
+  /* Ensure element maintains its space in layout */
+  contain: layout style paint !important;
+}
+
+/* Also override any hover shadows with maximum specificity */
+.jar-vibrating:hover,
+.PolymerColumn.jar-vibrating,
+.PolymerColumn.jar-vibrating:hover {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+@keyframes jarVibration {
+  0%, 100% { 
+    transform: translate(0px, 0px) scale(1) rotate(0deg) !important; 
+  }
+  15% { 
+    transform: translate(-1px, -2px) scale(1.005) rotate(-0.5deg) !important; 
+  }
+  30% { 
+    transform: translate(2px, 1px) scale(1.01) rotate(0.3deg) !important; 
+  }
+  45% { 
+    transform: translate(-1px, 2px) scale(1.005) rotate(-0.2deg) !important; 
+  }
+  60% { 
+    transform: translate(1px, -1px) scale(1.008) rotate(0.4deg) !important; 
+  }
+  75% { 
+    transform: translate(-2px, -1px) scale(1.003) rotate(-0.3deg) !important; 
+  }
+  85% { 
+    transform: translate(1px, 1px) scale(1.005) rotate(0.2deg) !important; 
+  }
+}
+
+/* Performance optimizations */
+@media (max-width: 768px) {
+  .jar-vibrating {
+    animation: none !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jar-vibrating {
+    animation: none !important;
+  }
+}
