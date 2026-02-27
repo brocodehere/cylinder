@@ -43,13 +43,13 @@ const LazyImage = ({ src, alt, className, $isLoaded }) => {
   const imageSrc = hasError || !src ? defaultImage : src;
 
   // Performance: Detect WebP support
-  const supportsWebP = () => {
-    if (typeof window === 'undefined') return false;
-    const canvas = document.createElement('canvas');
-    canvas.width = 1;
-    canvas.height = 1;
-    return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
-  };
+  // const supportsWebP = () => {
+  //   if (typeof window === 'undefined') return false;
+  //   const canvas = document.createElement('canvas');
+  //   canvas.width = 1;
+  //   canvas.height = 1;
+  //   return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+  // };
 
   // Performance: Convert to WebP if supported
   const getOptimizedSrc = (originalSrc) => {

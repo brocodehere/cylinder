@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import { StyleSheetManager } from 'styled-components';
 import LazyImage from './LazyImage';
 import GasEffects from './GasEffects';
@@ -16,7 +16,6 @@ const shouldForwardProp = (prop) => {
 // Performance optimization: Detect mobile and reduced motion
 const isMobile = () => typeof window !== 'undefined' && window.innerWidth <= 768;
 const prefersReducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isTabVisible = () => typeof document !== 'undefined' && !document.hidden;
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -153,13 +152,6 @@ const Title = styled(motion.h1)`
   text-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
 `;
 
-const Subtitle = styled(motion.p)`
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 600px;
-  margin: 0 auto;
-`;
-
 const ColumnsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -231,14 +223,6 @@ const NavigationArrow = styled.button`
     height: 35px;
     font-size: 1rem;
   }
-`;
-
-const LeftArrow = styled(NavigationArrow)`
-  left: 10px;
-`;
-
-const RightArrow = styled(NavigationArrow)`
-  right: 10px;
 `;
 
 const PolymerColumn = styled(motion.div)`
@@ -686,8 +670,6 @@ function HeroSectionContent() {
   useEffect(() => {
     const updateVisibleJars = () => {
       if (typeof window !== 'undefined') {
-        const screenWidth = window.innerWidth;
-        
         // TEMPORARILY DISABLE JAR LIMITING TO DEBUG
         setVisibleJars(jars);
         
