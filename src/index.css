@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -23,4 +24,45 @@ html, body, #root {
   padding: 0;
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Remove default margins from all elements */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Specifically target section elements */
+section {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+}
+
+/* Force hero section to top */
+.HeroContainer {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: -40px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+}
+
+/* Add margin for laptop and desktop */
+@media (min-width: 769px) {
+  .HeroContainer {
+    top: -40px !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .HeroContainer {
+    top: -40px !important;
+  }
 }

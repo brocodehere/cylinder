@@ -190,6 +190,41 @@ const GasEffects = ({ jarId, subheadings, isActive, isMobile, prefersReducedMoti
   const [particles, setParticles] = useState([]);
   const containerRef = useRef(null);
   
+  useEffect(() => {
+    const subheadingsArray = Array.isArray(subheadings) ? subheadings : Object.values(subheadings || {});
+    
+    if (!subheadingsArray || subheadingsArray.length === 0) {
+      setParticles([]);
+      return;
+    }
+
+    const positions = generateCircularPositions(subheadingsArray.length);
+    
+    // Fill subheading texts into positions using actualIndex
+    const newParticles = positions.map((position, index) => {
+      if (position.type === 'subheading') {
+        const subheading = subheadingsArray[position.actualIndex];
+        return {
+          ...position,
+          id: `${jarId}-${subheading.id}`,
+          text: subheading.subtitle_text,
+          opacity: 0,
+          scale: 0.4
+        };
+      } else {
+        // Arrow or special arrow
+        return {
+          ...position,
+          id: `${jarId}-${position.type}-${index}`,
+          opacity: 0,
+          scale: 0.4
+        };
+      }
+    });
+
+    setParticles(newParticles);
+  }, [jarId, subheadings]); // Fixed dependency array
+
   // Generate positions for parallel horizontal lines with arrows
   const generateCircularPositions = (count) => {
     const positions = [];

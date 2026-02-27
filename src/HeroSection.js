@@ -81,26 +81,28 @@ const HeroContainer = styled.section`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  position: relative;
-  padding: 2rem;
-  padding-top: -20px; /* Minimal top margin */
+  position: fixed;
+  top: -20px;
+  left: 0;
+  right: 0;
+  padding: 1rem;
   z-index: 1;
   
   @media (max-width: 768px) {
-    padding: 1rem; /* Reduced padding for mobile */
-    padding-top: 2px; /* Almost no top margin on mobile */
+    padding: 0.5rem;
+    top: -20px;
   }
   
   @media (max-width: 480px) {
-    padding: 0.75rem; /* Even smaller padding for small mobile */
-    padding-top: 0px; /* No top margin on small mobile */
+    padding: 0.25rem;
+    top: -20px;
   }
   
   @media (max-width: 1024px) {
-    padding: 1.5rem; /* Slightly reduced padding for tablets */
-    padding-top: 3px; /* Minimal top margin on tablets */
+    padding: 0.75rem;
+    top: -10px;
   }
 `;
 
@@ -152,7 +154,10 @@ const ColumnsContainer = styled.div`
     margin: 0; /* Remove negative margin */
     overflow-x: visible; /* No horizontal scrolling needed */
     
-    /* Remove scrollbar styles since no scrolling */
+    /* Mobile: Two rows layout */
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem; /* Larger gap between rows */
   }
   
   @media (max-width: 480px) {
@@ -162,7 +167,10 @@ const ColumnsContainer = styled.div`
     margin: 0; /* Remove negative margin */
     overflow-x: visible; /* No horizontal scrolling needed */
     
-    /* Remove CSS hiding - let JavaScript handle jar limiting */
+    /* Mobile: Two rows layout */
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem; /* Gap between rows on very small screens */
   }
   
   @media (max-width: 1024px) {
@@ -575,6 +583,12 @@ function HeroSectionContent() {
 
   // Display limited jars for mobile, all jars for desktop
   const getAllJars = () => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      // Mobile: Show only 3 jars in first row, rest in second row
+      const firstRow = visibleJars.slice(0, 3);
+      const secondRow = visibleJars.slice(3);
+      return [...firstRow, ...secondRow];
+    }
     return visibleJars.length > 0 ? visibleJars : jars;
   };
 
@@ -700,14 +714,16 @@ function HeroSectionContent() {
                 {renderTitles(jar.titles)}
               </ColumnContent>
               
-              {/* Gas-like subheading effects */}
-              <GasEffects
-                jarId={jar.id}
-                subheadings={jar.subheadings || []}
-                isActive={true} // Always active for continuous animation
-                isMobile={isMobile()}
-                prefersReducedMotion={prefersReducedMotion()}
-              />
+              {/* Gas-like subheading effects - disabled for mobile */}
+              {!isMobile() && window.innerWidth > 1024 && !prefersReducedMotion() && (
+                <GasEffects
+                  jarId={jar.id}
+                  subheadings={jar.subheadings || []}
+                  isActive={true} // Always active for continuous animation
+                  isMobile={isMobile()}
+                  prefersReducedMotion={prefersReducedMotion()}
+                />
+              )}
             </PolymerColumn>
           );
         })}
