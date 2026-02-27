@@ -8,11 +8,6 @@ import axios from 'axios';
 import './JarEffects.css';
 import { useTheme } from './contexts/ThemeContext';
 
-// Custom shouldForwardProp to filter out Framer Motion and custom props
-const shouldForwardProp = (prop) => {
-  return !['whileInView', 'whileHover', 'isMain', 'titleCount', '$isLoaded'].includes(prop);
-};
-
 // Performance optimization: Detect mobile and reduced motion
 const isMobile = () => typeof window !== 'undefined' && window.innerWidth <= 768;
 const prefersReducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
